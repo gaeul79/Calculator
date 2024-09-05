@@ -2,13 +2,13 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("=== Lv2. 계산기를 시작합니다. ===");
         int firstNum = 0;
         int secondNum = 0;
-        double result = 0;
+        double result = 0.0;
         String operator = null;
-
-        Scanner sc = new Scanner(System.in);
-        System.out.println("=== Lv1. 계산기를 시작합니다. ===");
+        Calculator calculator = new Calculator();
 
         while (true) {
             System.out.print("첫번째 숫자를 입력해주세요 >> ");
