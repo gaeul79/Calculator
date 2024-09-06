@@ -6,8 +6,10 @@ public class App {
         Scanner sc = new Scanner(System.in);
         System.out.println("=== Lv3. 계산기를 시작합니다. ===");
 
-        Calculator calculator = new Calculator();
-        calculator.setCalcHistoryItems(new ArrayList<>());
+//        Calculator calculator = new Calculator();
+//        calculator.setCalcHistoryItems(new ArrayList<>());
+        ArithmeticCalculator calculator = new ArithmeticCalculator();
+        calculator.setCalcHistoryItems(new ArrayList<String>());
 
         while (true) {
             System.out.println("1. 연산 기록 보기");
@@ -32,17 +34,17 @@ public class App {
                     if (calculator.getCalcHistoryItems().isEmpty()) {
                         System.out.println("History is empty...");
                     } else {
-                        for (String calcHistoryItem : calculator.getCalcHistoryItems()) {
-                            System.out.println(idx + ". " + calcHistoryItem);
+                        for (var calcHistoryItem : calculator.getCalcHistoryItems()) {
+                            System.out.println(idx + ". " + calcHistoryItem.toString());
                         }
                     }
                     System.out.println("================");
                     break;
                 case 2:
-                    int firstNum = 0;
+                    double firstNum = 0;
                     System.out.print("첫번째 숫자를 입력해주세요 >> ");
                     while (true) {
-                        firstNum = sc.nextInt();
+                        firstNum = sc.nextDouble();
                         sc.nextLine();
                         if (firstNum > 0) {
                             break;
@@ -62,10 +64,10 @@ public class App {
                         }
                     }
 
-                    int secondNum = 0;
+                    double secondNum = 0;
                     System.out.print("두번째 숫자를 입력해주세요 >> ");
                     while (true) {
-                        secondNum = sc.nextInt();
+                        secondNum = sc.nextDouble();
                         sc.nextLine();
                         if (secondNum > 0) {
                             break;
@@ -77,11 +79,11 @@ public class App {
                         }
                     }
 
-                    double result = calculator.calculate(firstNum, secondNum, operator);
-                    System.out.println("결과 >> " + result);
+                    var result = calculator.calculate(firstNum, secondNum, OperatorType.ADD);
+                    System.out.println("결과 >> " + result.toString());
                     break;
                 case 3:
-                    calculator.removeFirstResult();
+                    //calculator.();
                     System.out.println("첫번째 기록을 삭제하였습니다.");
                     break;
                 default:
