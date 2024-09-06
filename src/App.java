@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class App {
@@ -61,9 +62,9 @@ public class App {
     }
 
     public static WorkType selectMenu() {
-        for (WorkType workType : WorkType.values()) {
-            System.out.println(workType.getIndex() + ". " + workType.getDescription());
-        }
+        // stream 으로 람다식(?) 처리
+        Arrays.stream(WorkType.values()).forEach( workType ->
+                System.out.println(workType.getIndex() + ". " + workType.getDescription()));
 
         System.out.print("메뉴를 선택하세요. >> ");
         while (true) {
@@ -129,20 +130,23 @@ public class App {
 
     public static void printCalcHistory(double num) {
         System.out.println("=== 연산 기록 ===");
-        if (calculator.getCalcHistoryItems().isEmpty()) {
+        var bigHistoryItems = calculator.getCalcHistoryItems().stream().filter(calcHistoryItem ->
+                Double.parseDouble(calcHistoryItem.toString()) > num).toList();
+
+        if (bigHistoryItems.isEmpty()) {
             System.out.println("History is empty...");
         } else {
-            for (var calcHistoryItem : calculator.getCalcHistoryItems()) {
-                if(num < Double.parseDouble(String.valueOf(calcHistoryItem))) {
-                    System.out.println(calcHistoryItem.toString());
-                }
-            }
+            bigHistoryItems.forEach(System.out::println); // 좋은데 stream 사용하니까 왜이리 노란줄이 그이는거지..?
         }
         System.out.println("================");
     }
 
     public static void removeFirstCalcHistory() {
-        calculator.removeFirstResult();
-        System.out.println("첫번째 기록을 삭제하였습니다.");
+        if (calculator.getCalcHistoryItems().isEmpty()) {
+            System.out.println("History is empty.");
+        } else {
+            calculator.removeFirstResult();
+            System.out.println("첫번째 기록을 삭제하였습니다.");
+        }
     }
 }
