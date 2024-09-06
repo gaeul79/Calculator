@@ -1,6 +1,6 @@
+package Main.Calculator;
+import Main.Enum.OperatorType;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.function.Function;
 
 public class ArithmeticCalculator<T> {
     private ArrayList<T> calcHistoryItems;
@@ -14,33 +14,30 @@ public class ArithmeticCalculator<T> {
     }
 
     public void removeFirstResult() {
-        if(!calcHistoryItems.isEmpty()) {
+        if (!calcHistoryItems.isEmpty()) {
             calcHistoryItems.remove(0);
         }
     }
 
     public T calculate(T firstNum, T secondNum, T operator) {
         Double result;
-        double num1 = (double)firstNum; // 이렇게 해도 되는걸까..ㅠ
-        double num2 = (double)secondNum;
+        double num1 = (double) firstNum; // 이렇게 해도 되는걸까..ㅠ
+        double num2 = (double) secondNum;
 
-        if(operator == OperatorType.ADD) {
+        if (operator == OperatorType.ADD) {
             result = num1 + num2;
-            calcHistoryItems.add((T)result);
-        }
-        else if(operator == OperatorType.SUBTRACT) {
+            calcHistoryItems.add((T) result);
+        } else if (operator == OperatorType.SUBTRACT) {
             result = num1 - num2;
-            calcHistoryItems.add((T)result);
-        }
-        else if(operator == OperatorType.MULTIPLY) {
+            calcHistoryItems.add((T) result);
+        } else if (operator == OperatorType.MULTIPLY) {
             result = num1 * num2;
-            calcHistoryItems.add((T)result);
-        }
-        else {
+            calcHistoryItems.add((T) result);
+        } else {
             result = num1 / num2;
-            calcHistoryItems.add((T)result);
+            calcHistoryItems.add((T) result);
         }
 
-        return calcHistoryItems.get(calcHistoryItems.size()-1);
+        return calcHistoryItems.get(calcHistoryItems.size() - 1);
     }
 }

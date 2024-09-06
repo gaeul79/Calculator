@@ -1,3 +1,5 @@
+package Main.Enum;
+
 public enum WorkType {
     CALCULATOR("계산", 1),
     HISTORY("연산 기록 보기", 2),

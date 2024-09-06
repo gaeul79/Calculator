@@ -1,5 +1,7 @@
+package Main.Enum;
+
 public enum OperatorType {
-    ADD("+") ,
+    ADD("+"),
     SUBTRACT("-"),
     MULTIPLY("*"),
     DIVIDE("/");

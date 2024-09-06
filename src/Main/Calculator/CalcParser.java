@@ -1,3 +1,6 @@
+package Main.Calculator;
+import Main.Enum.OperatorType;
+import Main.Exception.BadInputException;
 import java.util.regex.Pattern;
 
 public class CalcParser {
@@ -13,8 +16,8 @@ public class CalcParser {
     }
 
     public static OperatorType ParserOperator(String operator) throws BadInputException {
-        for(OperatorType type : OperatorType.values()){
-            if(type.getName().equals(operator)){
+        for (OperatorType type : OperatorType.values()) {
+            if (type.getName().equals(operator)) {
                 return type;
             }
         }

@@ -1,3 +1,9 @@
+package Main;
+import Main.Calculator.ArithmeticCalculator;
+import Main.Calculator.CalcParser;
+import Main.Enum.OperatorType;
+import Main.Enum.WorkType;
+import Main.Exception.BadInputException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -63,7 +69,7 @@ public class App {
 
     public static WorkType selectMenu() {
         // stream 으로 람다식(?) 처리
-        Arrays.stream(WorkType.values()).forEach( workType ->
+        Arrays.stream(WorkType.values()).forEach(workType ->
                 System.out.println(workType.getIndex() + ". " + workType.getDescription()));
 
         System.out.print("메뉴를 선택하세요. >> ");
