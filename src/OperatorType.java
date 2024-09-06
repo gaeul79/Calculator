@@ -1,13 +1,8 @@
-import java.util.Arrays;
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.Map;
-
 public enum OperatorType {
     ADD("+") ,
     SUBTRACT("-"),
     MULTIPLY("*"),
-    DIVIDE("-");
+    DIVIDE("/");
 
     private String name;
 

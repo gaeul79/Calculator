@@ -7,25 +7,7 @@ public class App {
 
     public static void main(String[] args) throws BadInputException {
         createCalculator();
-        startCalculator();
-    }
-
-    public static int selectMenu() {
-        System.out.println("=== Lv3. 계산기를 시작합니다. ===");
-        System.out.println("1. 계산");
-        System.out.println("2. 연산 기록 보기");
-        System.out.println("3. 입력받은 값보다 큰 결과값 출력");
-        System.out.println("4. 첫번째 연산 기록 삭제");
-        System.out.print("메뉴를 선택하세요. >> ");
-        while (true) {
-            int menu = sc.nextInt();
-            sc.nextLine();
-            if (menu < 1 || menu > 3) {
-                System.out.print("메뉴(1~4)를 선택하세요. >> ");
-            } else {
-                return menu;
-            }
-        }
+        start();
     }
 
     public static void createCalculator() {
@@ -33,39 +15,72 @@ public class App {
         calculator.setCalcHistoryItems(new ArrayList<String>());
     }
 
-    public static void startCalculator() {
+    public static void start() {
         sc = new Scanner(System.in);
+        System.out.println("=== Lv3. 계산기를 시작합니다. ===");
         while (true) {
             switch (selectMenu()) {
-                case 1:
+                case CALCULATOR:
                     basicCalculator();
                     break;
-                case 2:
-                    printCalcHistory(true);
+                case HISTORY:
+                    printCalcHistory();
                     break;
-                case 3:
-                    printCalcHistory(false);
+                case HIGH_HISTORY:
+                    double num = inputNum("숫자를 입력해주세요 >> ");
+                    printCalcHistory(num);
                     break;
-                case 4:
+                case REMOVE_FIRST_HISTORY:
                     removeFirstCalcHistory();
                     break;
+                case END:
+                    finish();
+                    return;
                 default:
                     break;
             }
 
-            if(finish())
+            if (!repeat()) {
+                finish();
                 break;
+            }
         }
     }
 
-    public static boolean finish() {
+    public static boolean repeat() {
         System.out.print("더 계산하시겠습니까? (exit 입력 시 종료) >> ");
-        if(sc.nextLine().equals("exit")) {
-            System.out.println("=== Lv3. 계산기를 종료합니다. ===");
+        if (sc.nextLine().equals("exit")) {
+            return false;
+        } else {
             return true;
         }
-        else {
-            return false;
+    }
+
+    public static void finish() {
+        System.out.println("=== Lv3. 계산기를 종료합니다. ===");
+    }
+
+    public static WorkType selectMenu() {
+        for (WorkType workType : WorkType.values()) {
+            System.out.println(workType.getIndex() + ". " + workType.getDescription());
+        }
+
+        System.out.print("메뉴를 선택하세요. >> ");
+        while (true) {
+            try {
+                int inputNum = (int) CalcParser.ParserNumber(sc.nextLine());
+                if (inputNum < 1 || inputNum > WorkType.values().length) {
+                    throw new BadInputException("범위안에 메뉴");
+                }
+
+                for (WorkType workType : WorkType.values()) {
+                    if (workType.getIndex() == inputNum) {
+                        return workType;
+                    }
+                }
+            } catch (Exception e) {
+                System.out.print(e.getMessage());
+            }
         }
     }
 
@@ -81,7 +96,7 @@ public class App {
         System.out.print(printInputMsg);
         while (true) {
             try {
-                return CalcParser.ParserOperand(sc.nextLine());
+                return CalcParser.ParserNumber(sc.nextLine());
             } catch (BadInputException e) {
                 System.out.print(e.getMessage());
             }
@@ -100,13 +115,27 @@ public class App {
         }
     }
 
-    public static void printCalcHistory(boolean isAll) {
+    public static void printCalcHistory() {
         System.out.println("=== 연산 기록 ===");
         if (calculator.getCalcHistoryItems().isEmpty()) {
             System.out.println("History is empty...");
         } else {
             for (var calcHistoryItem : calculator.getCalcHistoryItems()) {
                 System.out.println(calcHistoryItem.toString());
+            }
+        }
+        System.out.println("================");
+    }
+
+    public static void printCalcHistory(double num) {
+        System.out.println("=== 연산 기록 ===");
+        if (calculator.getCalcHistoryItems().isEmpty()) {
+            System.out.println("History is empty...");
+        } else {
+            for (var calcHistoryItem : calculator.getCalcHistoryItems()) {
+                if(num < Double.parseDouble(String.valueOf(calcHistoryItem))) {
+                    System.out.println(calcHistoryItem.toString());
+                }
             }
         }
         System.out.println("================");

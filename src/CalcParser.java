@@ -4,9 +4,9 @@ public class CalcParser {
     private static final String OPERATION_REG = "[+\\-*/]";
     private static final String NUMBER_REG = "^[0-9]*$";
 
-    public static double ParserOperand(String strFirstNum) throws BadInputException {
-        if (Pattern.matches(NUMBER_REG, strFirstNum)) {
-            return Double.parseDouble(strFirstNum);
+    public static double ParserNumber(String strNum) throws BadInputException {
+        if (Pattern.matches(NUMBER_REG, strNum)) {
+            return Double.parseDouble(strNum);
         } else {
             throw new BadInputException("숫자");
         }
