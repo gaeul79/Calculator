@@ -1,6 +1,6 @@
 package Main.Enum;
 
-public enum WorkType {
+public enum Menu {
     CALCULATOR("계산", 1),
     HISTORY("연산 기록 보기", 2),
     HIGH_HISTORY("입력받은 값보다 큰 결과값 출력", 3),
@@ -9,7 +9,7 @@ public enum WorkType {
 
     private String description;
 
-    WorkType(String description, int index) {
+    Menu(String description, int index) {
         this.description = description;
         this.index = index;
     }

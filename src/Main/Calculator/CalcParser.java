@@ -1,11 +1,12 @@
 package Main.Calculator;
+
 import Main.Enum.OperatorType;
 import Main.Exception.BadInputException;
+
 import java.util.regex.Pattern;
 
-public class CalcParser {
-    private static final String OPERATION_REG = "[+\\-*/]";
-    private static final String NUMBER_REG = "^[0-9]*$";
+public class CalcParser<E extends Enum> {
+    private static final String NUMBER_REG = "-?[0-9]*\\.?[0-9]*";
 
     public static double ParserNumber(String strNum) throws BadInputException {
         if (Pattern.matches(NUMBER_REG, strNum)) {
