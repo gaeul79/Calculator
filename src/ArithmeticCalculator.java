@@ -8,12 +8,16 @@ public class ArithmeticCalculator<T> {
     public ArrayList<T> getCalcHistoryItems() {
         return calcHistoryItems;
     }
-    
+
     public void setCalcHistoryItems(ArrayList<T> calcHistoryItems) {
         this.calcHistoryItems = calcHistoryItems;
     }
 
-
+    public void removeFirstResult() {
+        if(!calcHistoryItems.isEmpty()) {
+            calcHistoryItems.remove(0);
+        }
+    }
 
     public T calculate(T firstNum, T secondNum, T operator) {
         Double result;
