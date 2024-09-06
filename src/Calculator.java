@@ -1,14 +1,14 @@
 import java.util.ArrayList;
 
 public class Calculator {
-    private ArrayList<String> arrayListCalcHistory;
+    private ArrayList<String> calcHistoryItems;
 
-    public ArrayList<String> getArrayListCalcHistory() {
-        return arrayListCalcHistory;
+    public ArrayList<String> getCalcHistoryItems() {
+        return calcHistoryItems;
     }
 
-    public void setArrayListCalcHistory(ArrayList<String> arrayListCalcHistory) {
-        this.arrayListCalcHistory = arrayListCalcHistory;
+    public void setCalcHistoryItems(ArrayList<String> calcHistoryItems) {
+        this.calcHistoryItems = calcHistoryItems;
     }
 
     public Calculator() {
@@ -16,8 +16,8 @@ public class Calculator {
     }
 
     public void removeFirstResult() {
-        if(!arrayListCalcHistory.isEmpty()) {
-            arrayListCalcHistory.remove(0);
+        if(!calcHistoryItems.isEmpty()) {
+            calcHistoryItems.remove(0);
         }
     }
 
@@ -47,7 +47,7 @@ public class Calculator {
         sb.append(secondNum);
         sb.append("=");
         sb.append(result);
-        arrayListCalcHistory.add(sb.toString());
+        calcHistoryItems.add(sb.toString());
         return result;
     }
 }

@@ -4,10 +4,10 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("=== Lv2. 계산기를 시작합니다. ===");
+        System.out.println("=== Lv3. 계산기를 시작합니다. ===");
 
         Calculator calculator = new Calculator();
-        calculator.setArrayListCalcHistory(new ArrayList<String>());
+        calculator.setCalcHistoryItems(new ArrayList<>());
 
         while (true) {
             System.out.println("1. 연산 기록 보기");
@@ -29,11 +29,11 @@ public class App {
                 case 1:
                     int idx = 1;
                     System.out.println("=== 연산 기록 ===");
-                    if (calculator.getArrayListCalcHistory().isEmpty()) {
-                        System.out.println("History is empty.");
+                    if (calculator.getCalcHistoryItems().isEmpty()) {
+                        System.out.println("History is empty...");
                     } else {
-                        for (String calcHistory : calculator.getArrayListCalcHistory()) {
-                            System.out.println(idx + ". " + calcHistory);
+                        for (String calcHistoryItem : calculator.getCalcHistoryItems()) {
+                            System.out.println(idx + ". " + calcHistoryItem);
                         }
                     }
                     System.out.println("================");
