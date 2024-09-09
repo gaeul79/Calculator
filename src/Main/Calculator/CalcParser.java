@@ -5,9 +5,17 @@ import Main.Exception.BadInputException;
 
 import java.util.regex.Pattern;
 
-public class CalcParser<E extends Enum> {
-    private static final String NUMBER_REG = "-?[0-9]*\\.?[0-9]*";
 
+/** 입력받은 값이 올바른 값인지 체크하는 함수들을 모은 클래스 */
+public class CalcParser {
+    private static final String NUMBER_REG = "-?[0-9]*\\.?[0-9]*"; // 숫자 정규 표현식
+
+    /**
+     * 입력받은 문자가 숫자인지 체크.
+     * @author 김현정
+     * @param strNum 분석할 문자열
+     * @return double 타입으로 변환하여 반환
+     */
     public static double ParserNumber(String strNum) throws BadInputException {
         if (Pattern.matches(NUMBER_REG, strNum)) {
             return Double.parseDouble(strNum);
@@ -16,6 +24,12 @@ public class CalcParser<E extends Enum> {
         }
     }
 
+    /**
+     * 입력받은 문자가 사칙연산자인지 체크.
+     * @author 김현정
+     * @param operator 분석할 문자열
+     * @return 매칭되는 OperatorType 반환
+     */
     public static OperatorType ParserOperator(String operator) throws BadInputException {
         for (OperatorType type : OperatorType.values()) {
             if (type.getName().equals(operator)) {

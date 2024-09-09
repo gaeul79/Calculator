@@ -20,11 +20,19 @@ public class App {
         start();
     }
 
+    /**
+     * 계산기를 생성한다.
+     * @author 김현정
+     */
     public static void createCalculator() {
         calculator = new ArithmeticCalculator();
         calculator.setCalcHistoryItems(new ArrayList<String>());
     }
 
+    /**
+     * 계산기를 시작한다.
+     * @author 김현정
+     */
     public static void start() {
         sc = new Scanner(System.in);
         System.out.println("=== Lv3. 계산기를 시작합니다. ===");
@@ -55,15 +63,31 @@ public class App {
         }
     }
 
+    /**
+     * 계산을 반복할지 여부를 받는다.
+     * @author 김현정
+     * @return 반복여부
+     */
     public static boolean repeat() {
         System.out.print("더 계산하시겠습니까? (exit 입력 시 종료) >> ");
         return !sc.nextLine().equals("exit");
     }
 
+    /**
+     * 계산기 종료 메세지 출력.
+     * @author 김현정
+     */
     public static void finish() {
         System.out.println("=== Lv3. 계산기를 종료합니다. ===");
     }
 
+    /**
+     * 계산기 종료 메세지 출력.
+     * @author 김현정
+     * @throws BadInputException
+     * 선택 범위를 벗어난 메뉴
+     * @return 선택한 메뉴
+     */
     public static Menu selectMenu() {
         // stream 으로 람다식(?) 처리
         Arrays.stream(Menu.values()).forEach(menu ->
@@ -73,16 +97,21 @@ public class App {
         while (true) {
             try {
                 int inputNum = (int) CalcParser.ParserNumber(sc.nextLine());
-                if(Arrays.stream(Menu.values()).filter(menu -> menu.getIndex() == inputNum).findFirst().isEmpty())
-                    throw new BadInputException("범위안에 메뉴");
-
-                return Menu.values()[inputNum];
+                for(Menu menu : Menu.values()) {
+                    if(menu.getIndex() == inputNum) {
+                        return menu;
+                    }
+                }
             } catch (Exception e) {
                 System.out.print(e.getMessage());
             }
         }
     }
 
+    /**
+     * 숫자와 연산자를 입력받은 뒤 사칙연산을 수행한다.
+     * @author 김현정
+     */
     public static void basicCalculator() {
         double firstNum = inputNum("첫번째 숫자를 입력해주세요 >> ");
         OperatorType operator = inputOperator("사칙연산 기호를 입력해주세요 >> ");
@@ -91,6 +120,12 @@ public class App {
         System.out.println("결과 >> " + result.toString());
     }
 
+    /**
+     * 숫자와 연산자를 입력받은 뒤 사칙연산을 수행한다.
+     * @author 김현정
+     * @param printInputMsg 숫자를 입력받을때 콘솔창에 출력할 메세지
+     * @return 입력한 숫자
+     */
     public static double inputNum(String printInputMsg) {
         System.out.print(printInputMsg);
         while (true) {
@@ -102,6 +137,12 @@ public class App {
         }
     }
 
+    /**
+     * 숫자와 연산자를 입력받은 뒤 사칙연산을 수행한다.
+     * @author 김현정
+     * @param printInputMsg 숫자를 입력받을때 콘솔창에 출력할 메세지
+     * @return 입력한 숫자
+     */
     public static OperatorType inputOperator(String printInputMsg) {
         System.out.print(printInputMsg);
         while (true) {
@@ -113,6 +154,11 @@ public class App {
         }
     }
 
+    /**
+     * 계산 결과 목록 출력
+     * @author 김현정
+     * @param menu 선택한 메뉴
+     */
     public static void printCalcHistory(Menu menu) {
         List historyItems;
         if(menu == Menu.HISTORY) {
@@ -133,6 +179,10 @@ public class App {
         System.out.println("================");
     }
 
+    /**
+     * 첫번째 계산 결과 삭제
+     * @author 김현정
+     */
     public static void removeFirstCalcHistory() {
         if (calculator.getCalcHistoryItems().isEmpty()) {
             System.out.println("History is empty.");

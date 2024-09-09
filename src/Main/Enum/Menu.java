@@ -1,5 +1,6 @@
 package Main.Enum;
 
+/** 계산기 메뉴 */
 public enum Menu {
     CALCULATOR("계산", 1),
     HISTORY("연산 기록 보기", 2),
@@ -14,13 +15,23 @@ public enum Menu {
         this.index = index;
     }
 
-    public String getDescription() { // 문자를 받아오는 함수
+    /**
+     * 메뉴 이름을 반환한다.
+     * @author 김현정
+     * @return 메뉴 이름 반환
+     */
+    public String getDescription() {
         return description;
     }
 
     private int index;
 
-    public int getIndex() { // 문자를 받아오는 함수
+    /**
+     * 메뉴 번호를 반환한다.
+     * @author 김현정
+     * @return 메뉴 번호 반환
+     */
+    public int getIndex() {
         return index;
     }
 }
