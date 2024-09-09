@@ -2,6 +2,7 @@ package Main;
 
 import Main.Calculator.ArithmeticCalculator;
 import Main.Calculator.CalcParser;
+import Main.Calculator.CalculatorItem;
 import Main.Enum.Menu;
 import Main.Enum.OperatorType;
 import Main.Exception.BadInputException;
@@ -26,7 +27,7 @@ public class App {
      */
     public static void createCalculator() {
         calculator = new ArithmeticCalculator();
-        calculator.setCalcHistoryItems(new ArrayList<String>());
+        calculator.setCalcHistoryItems(new ArrayList<CalculatorItem>());
     }
 
     /**
@@ -116,8 +117,8 @@ public class App {
         double firstNum = inputNum("첫번째 숫자를 입력해주세요 >> ");
         OperatorType operator = inputOperator("사칙연산 기호를 입력해주세요 >> ");
         double secondNum = inputNum("두번째 숫자를 입력해주세요 >> ");
-        var result = calculator.calculate(firstNum, secondNum, operator);
-        System.out.println("결과 >> " + result.toString());
+        double result = calculator.calculate(firstNum, secondNum, operator);
+        System.out.println("결과 >> " + result);
     }
 
     /**
@@ -160,21 +161,21 @@ public class App {
      * @param menu 선택한 메뉴
      */
     public static void printCalcHistory(Menu menu) {
-        List historyItems;
+        List<CalculatorItem> historyItems;
         if(menu == Menu.HISTORY) {
             historyItems = calculator.getCalcHistoryItems();
         }
         else {
             double num = inputNum("숫자를 입력해주세요 >> ");
-            historyItems = calculator.getCalcHistoryItems().stream().filter(calcHistoryItem ->
-                    Double.parseDouble(calcHistoryItem.toString()) > num).toList();
+            historyItems = ((List<CalculatorItem>)calculator.getCalcHistoryItems()).stream()
+                    .filter(item -> item.getResult() > num).toList();
         }
 
         System.out.println("=== 연산 기록 ===");
         if (historyItems.isEmpty()) {
             System.out.println("History is empty...");
         } else {
-            historyItems.forEach(System.out::println); // 좋은데 stream 사용하니까 왜이리 노란줄이 그이는거지..?
+            historyItems.forEach(CalculatorItem::printResult);
         }
         System.out.println("================");
     }
