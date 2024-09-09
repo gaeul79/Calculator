@@ -23,6 +23,7 @@ public class App {
 
     /**
      * 계산기를 생성한다.
+     *
      * @author 김현정
      */
     public static void createCalculator() {
@@ -32,6 +33,7 @@ public class App {
 
     /**
      * 계산기를 시작한다.
+     *
      * @author 김현정
      */
     public static void start() {
@@ -44,7 +46,7 @@ public class App {
                     basicCalculator();
                     break;
                 case HISTORY:
-                case HIGH_HISTORY:
+                case HIGH_RESULT_HISTORY:
                     printCalcHistory(menu);
                     break;
                 case REMOVE_FIRST_HISTORY:
@@ -66,8 +68,9 @@ public class App {
 
     /**
      * 계산을 반복할지 여부를 받는다.
-     * @author 김현정
+     *
      * @return 반복여부
+     * @author 김현정
      */
     public static boolean repeat() {
         System.out.print("더 계산하시겠습니까? (exit 입력 시 종료) >> ");
@@ -76,6 +79,7 @@ public class App {
 
     /**
      * 계산기 종료 메세지 출력.
+     *
      * @author 김현정
      */
     public static void finish() {
@@ -84,13 +88,14 @@ public class App {
 
     /**
      * 계산기 종료 메세지 출력.
-     * @author 김현정
-     * @throws BadInputException
-     * 선택 범위를 벗어난 메뉴
+     *
      * @return 선택한 메뉴
+     * @throws BadInputException 선택 범위를 벗어난 메뉴
+     * @author 김현정
      */
     public static Menu selectMenu() {
         // stream 으로 람다식(?) 처리
+        // 계산기 메뉴 출력
         Arrays.stream(Menu.values()).forEach(menu ->
                 System.out.println(menu.getIndex() + ". " + menu.getDescription()));
 
@@ -98,8 +103,8 @@ public class App {
         while (true) {
             try {
                 int inputNum = (int) CalcParser.ParserNumber(sc.nextLine());
-                for(Menu menu : Menu.values()) {
-                    if(menu.getIndex() == inputNum) {
+                for (Menu menu : Menu.values()) {
+                    if (menu.getIndex() == inputNum) {
                         return menu;
                     }
                 }
@@ -111,23 +116,25 @@ public class App {
 
     /**
      * 숫자와 연산자를 입력받은 뒤 사칙연산을 수행한다.
+     *
      * @author 김현정
      */
     public static void basicCalculator() {
-        double firstNum = inputNum("첫번째 숫자를 입력해주세요 >> ");
+        double firstNum = inputNumber("첫번째 숫자를 입력해주세요 >> ");
         OperatorType operator = inputOperator("사칙연산 기호를 입력해주세요 >> ");
-        double secondNum = inputNum("두번째 숫자를 입력해주세요 >> ");
+        double secondNum = inputNumber("두번째 숫자를 입력해주세요 >> ");
         double result = calculator.calculate(firstNum, secondNum, operator);
         System.out.println("결과 >> " + result);
     }
 
     /**
      * 숫자와 연산자를 입력받은 뒤 사칙연산을 수행한다.
-     * @author 김현정
+     *
      * @param printInputMsg 숫자를 입력받을때 콘솔창에 출력할 메세지
      * @return 입력한 숫자
+     * @author 김현정
      */
-    public static double inputNum(String printInputMsg) {
+    public static double inputNumber(String printInputMsg) {
         System.out.print(printInputMsg);
         while (true) {
             try {
@@ -140,9 +147,10 @@ public class App {
 
     /**
      * 숫자와 연산자를 입력받은 뒤 사칙연산을 수행한다.
-     * @author 김현정
-     * @param printInputMsg 숫자를 입력받을때 콘솔창에 출력할 메세지
+     *
+     * @param printInputMsg 숫자를 입력받을때 무슨 숫자를 입력할지 콘솔창에 출력할 메세지
      * @return 입력한 숫자
+     * @author 김현정
      */
     public static OperatorType inputOperator(String printInputMsg) {
         System.out.print(printInputMsg);
@@ -157,17 +165,17 @@ public class App {
 
     /**
      * 계산 결과 목록 출력
-     * @author 김현정
+     *
      * @param menu 선택한 메뉴
+     * @author 김현정
      */
     public static void printCalcHistory(Menu menu) {
         List<CalculatorItem> historyItems;
-        if(menu == Menu.HISTORY) {
+        if (menu == Menu.HISTORY) {
             historyItems = calculator.getCalcHistoryItems();
-        }
-        else {
-            double num = inputNum("숫자를 입력해주세요 >> ");
-            historyItems = ((List<CalculatorItem>)calculator.getCalcHistoryItems()).stream()
+        } else {
+            double num = inputNumber("숫자를 입력해주세요 >> ");
+            historyItems = ((List<CalculatorItem>) calculator.getCalcHistoryItems()).stream()
                     .filter(item -> item.getResult() > num).toList();
         }
 
@@ -182,6 +190,7 @@ public class App {
 
     /**
      * 첫번째 계산 결과 삭제
+     *
      * @author 김현정
      */
     public static void removeFirstCalcHistory() {

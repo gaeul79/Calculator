@@ -43,20 +43,16 @@ public class ArithmeticCalculator<T> {
         calcItem.setSecondNumber(num2);
         calcItem.setOperator(operator);
 
-        if (operator == OperatorType.ADD) {
+        if (operator == OperatorType.ADD)
             calcItem.setResult(num1 + num2);
-            calcHistoryItems.add(calcItem);
-        } else if (operator == OperatorType.SUBTRACT) {
+        else if (operator == OperatorType.SUBTRACT)
             calcItem.setResult(num1 - num2);
-            calcHistoryItems.add(calcItem);
-        } else if (operator == OperatorType.MULTIPLY) {
+        else if (operator == OperatorType.MULTIPLY)
             calcItem.setResult(num1 * num2);
-            calcHistoryItems.add(calcItem);
-        } else {
+        else
             calcItem.setResult(num1 / num2);
-            calcHistoryItems.add(calcItem);
-        }
 
+        calcHistoryItems.add(calcItem);
         return calcItem.getResult();
     }
 }
