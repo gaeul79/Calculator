@@ -9,10 +9,10 @@ public enum OperatorType {
     MULTIPLY("*"), // 곱하기
     DIVIDE("/"); // 나누기
 
-    private String name;
+    private String symbol;
 
     OperatorType(String name) {
-        this.name = name;
+        this.symbol = name;
     }
 
     /**
@@ -21,7 +21,7 @@ public enum OperatorType {
      * @return 연산 기호 반환
      * @author 김현정
      */
-    public String getName() { // 문자를 받아오는 함수
-        return name;
+    public String getSymbol() { // 문자를 받아오는 함수
+        return symbol;
     }
 }

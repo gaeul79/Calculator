@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class App {
-    public static ArithmeticCalculator calculator;
+    public static ArithmeticCalculator<Double> calculator;
     public static Scanner sc;
 
-    public static void main(String[] args) throws BadInputException {
+    public static void main(String[] args) {
         createCalculator();
         start();
     }
@@ -27,8 +27,8 @@ public class App {
      * @author 김현정
      */
     public static void createCalculator() {
-        calculator = new ArithmeticCalculator();
-        calculator.setCalcHistoryItems(new ArrayList<CalculatorItem>());
+        calculator = new ArithmeticCalculator<>();
+        calculator.setCalcHistoryItems(new ArrayList<>());
     }
 
     /**
@@ -90,7 +90,7 @@ public class App {
      * 계산기 종료 메세지 출력.
      *
      * @return 선택한 메뉴
-     * @throws BadInputException 선택 범위를 벗어난 메뉴
+     * @throws Exception 선택 범위를 벗어난 메뉴
      * @author 김현정
      */
     public static Menu selectMenu() {
@@ -175,7 +175,7 @@ public class App {
             historyItems = calculator.getCalcHistoryItems();
         } else {
             double num = inputNumber("숫자를 입력해주세요 >> ");
-            historyItems = ((List<CalculatorItem>) calculator.getCalcHistoryItems()).stream()
+            historyItems = calculator.getCalcHistoryItems().stream()
                     .filter(item -> item.getResult() > num).toList();
         }
 
@@ -194,11 +194,13 @@ public class App {
      * @author 김현정
      */
     public static void removeFirstCalcHistory() {
+        System.out.println("=== 연산 기록 ===");
         if (calculator.getCalcHistoryItems().isEmpty()) {
             System.out.println("History is empty.");
         } else {
             calculator.removeFirstResult();
             System.out.println("첫번째 기록을 삭제하였습니다.");
         }
+        System.out.println("================");
     }
 }

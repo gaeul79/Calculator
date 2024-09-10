@@ -38,7 +38,7 @@ public class CalcParser {
      */
     public static OperatorType ParserOperator(String operator) throws BadInputException {
         for (OperatorType type : OperatorType.values()) {
-            if (type.getName().equals(operator)) {
+            if (type.getSymbol().equals(operator)) {
                 return type;
             }
         }

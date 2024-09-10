@@ -40,6 +40,6 @@ public class CalculatorItem {
      * @author 김현정
      */
     public void printResult() {
-        System.out.println(firstNumber + " " + operator.getName() + " " + secondNumber + " = " + result);
+        System.out.println(firstNumber + " " + operator.getSymbol() + " " + secondNumber + " = " + result);
     }
 }
