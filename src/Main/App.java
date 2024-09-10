@@ -194,13 +194,11 @@ public class App {
      * @author 김현정
      */
     public static void removeFirstCalcHistory() {
-        System.out.println("=== 연산 기록 ===");
         if (calculator.getCalcHistoryItems().isEmpty()) {
             System.out.println("History is empty.");
         } else {
             calculator.removeFirstResult();
             System.out.println("첫번째 기록을 삭제하였습니다.");
         }
-        System.out.println("================");
     }
 }
