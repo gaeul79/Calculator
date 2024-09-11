@@ -90,7 +90,7 @@ public class App {
      * 계산기 종료 메세지 출력.
      *
      * @return 선택한 메뉴
-     * @throws Exception 선택 범위를 벗어난 메뉴
+     * @throws BadInputException 선택 범위를 벗어난 메뉴
      * @author 김현정
      */
     public static Menu selectMenu() {
@@ -108,7 +108,8 @@ public class App {
                         return menu;
                     }
                 }
-            } catch (Exception e) {
+                throw new BadInputException("(1~5)사이 메뉴");
+            } catch (BadInputException e) {
                 System.out.print(e.getMessage());
             }
         }
