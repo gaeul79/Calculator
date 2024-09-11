@@ -1,5 +1,7 @@
 package Main.Enum;
 
+import Main.Exception.BadInputException;
+
 /**
  * 계산기 메뉴
  */
@@ -37,5 +39,24 @@ public enum Menu {
      */
     public int getIndex() {
         return index;
+    }
+
+    /**
+     * 입력받은 숫자에 해당하는 메뉴 반환.
+     *
+     * @param index 입력받은 숫자
+     * @return 메뉴 반환
+     * @throws BadInputException 범위를 벗어난 메뉴 입력
+     * @author 김현정
+     */
+    public static Menu getMenu(int index) throws BadInputException {
+        for (Menu menu : Menu.values()) {
+            if (menu.getIndex() == index)
+            {
+                return menu;
+            }
+        }
+
+        throw new BadInputException("범위를 벗어난 메뉴");
     }
 }

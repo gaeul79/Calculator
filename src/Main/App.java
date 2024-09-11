@@ -90,7 +90,6 @@ public class App {
      * 계산기 종료 메세지 출력.
      *
      * @return 선택한 메뉴
-     * @throws BadInputException 선택 범위를 벗어난 메뉴
      * @author 김현정
      */
     public static Menu selectMenu() {
@@ -103,12 +102,7 @@ public class App {
         while (true) {
             try {
                 int inputNum = (int) CalcParser.ParserNumber(sc.nextLine());
-                for (Menu menu : Menu.values()) {
-                    if (menu.getIndex() == inputNum) {
-                        return menu;
-                    }
-                }
-                throw new BadInputException("(1~5)사이 메뉴");
+                return Menu.getMenu(inputNum);
             } catch (BadInputException e) {
                 System.out.print(e.getMessage());
             }
@@ -157,7 +151,7 @@ public class App {
         System.out.print(printInputMsg);
         while (true) {
             try {
-                return CalcParser.ParserOperator(sc.nextLine());
+                return OperatorType.getOperatorType(sc.nextLine());
             } catch (BadInputException e) {
                 System.out.print(e.getMessage());
             }
@@ -173,10 +167,10 @@ public class App {
     public static void printCalcHistory(Menu menu) {
         List<CalculatorItem> historyItems;
         if (menu == Menu.HISTORY) {
-            historyItems = calculator.getCalcHistoryItems();
+            historyItems = calculator.getAllCalcHistoryItems();
         } else {
             double num = inputNumber("숫자를 입력해주세요 >> ");
-            historyItems = calculator.getCalcHistoryItems().stream()
+            historyItems = calculator.getAllCalcHistoryItems().stream()
                     .filter(item -> item.getResult() > num).toList();
         }
 
@@ -195,7 +189,7 @@ public class App {
      * @author 김현정
      */
     public static void removeFirstCalcHistory() {
-        if (calculator.getCalcHistoryItems().isEmpty()) {
+        if (calculator.getAllCalcHistoryItems().isEmpty()) {
             System.out.println("History is empty.");
         } else {
             calculator.removeFirstResult();

@@ -10,7 +10,7 @@ import java.util.List;
 public class ArithmeticCalculator<N extends Number> {
     private List<CalculatorItem> calcHistoryItems;
 
-    public List<CalculatorItem> getCalcHistoryItems() {
+    public List<CalculatorItem> getAllCalcHistoryItems() {
         return calcHistoryItems;
     }
 
@@ -47,14 +47,12 @@ public class ArithmeticCalculator<N extends Number> {
         calcItem.setSecondNumber(num2);
         calcItem.setOperator(operator);
 
-        if (operator == OperatorType.ADD)
-            calcItem.setResult(num1 + num2);
-        else if (operator == OperatorType.SUBTRACT)
-            calcItem.setResult(num1 - num2);
-        else if (operator == OperatorType.MULTIPLY)
-            calcItem.setResult(num1 * num2);
-        else
-            calcItem.setResult(num1 / num2);
+        switch (operator) {
+            case ADD -> calcItem.setResult(num1 + num2);
+            case SUBTRACT -> calcItem.setResult(num1 - num2);
+            case MULTIPLY -> calcItem.setResult(num1 * num2);
+            case DIVIDE -> calcItem.setResult(num1 / num2);
+        }
 
         calcHistoryItems.add(calcItem);
         return (N) (Number) calcItem.getResult();
