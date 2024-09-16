@@ -1,9 +1,11 @@
 package Main.Enum;
 
-import Main.Exception.BadInputException;
+import Main.Exception.InvalidTypeInputException;
 
 /**
  * 계산기 메뉴
+ *
+ * @author 김현정
  */
 public enum Menu {
     CALCULATOR("계산", 1),
@@ -46,17 +48,16 @@ public enum Menu {
      *
      * @param index 입력받은 숫자
      * @return 메뉴 반환
-     * @throws BadInputException 범위를 벗어난 메뉴 입력
+     * @throws InvalidTypeInputException 범위를 벗어난 메뉴 입력
      * @author 김현정
      */
-    public static Menu getMenu(int index) throws BadInputException {
+    public static Menu getMenu(int index) throws InvalidTypeInputException {
         for (Menu menu : Menu.values()) {
-            if (menu.getIndex() == index)
-            {
+            if (menu.getIndex() == index) {
                 return menu;
             }
         }
 
-        throw new BadInputException("범위를 벗어난 메뉴");
+        throw new InvalidTypeInputException(Integer.toString(index), "1~" + Menu.values().length + "사이 정수", "범위를 벗어난 메뉴를 입력하였습니다.");
     }
 }

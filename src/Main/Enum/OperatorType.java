@@ -1,9 +1,11 @@
 package Main.Enum;
 
-import Main.Exception.BadInputException;
+import Main.Exception.InvalidTypeInputException;
 
 /**
  * 사칙연산 종류
+ *
+ * @author 김현정
  */
 public enum OperatorType {
     ADD("+"), // 더하기
@@ -11,7 +13,7 @@ public enum OperatorType {
     MULTIPLY("*"), // 곱하기
     DIVIDE("/"); // 나누기
 
-    private String symbol;
+    private final String symbol;
 
     OperatorType(String name) {
         this.symbol = name;
@@ -32,17 +34,16 @@ public enum OperatorType {
      *
      * @param symbol 입력받은 문자열
      * @return 연산자 반환
-     * @throws BadInputException 잘못된 연산자 입력
+     * @throws InvalidTypeInputException 잘못된 연산자 입력
      * @author 김현정
      */
-    public static OperatorType getOperatorType(String symbol) throws BadInputException {
+    public static OperatorType getOperatorType(String symbol) throws InvalidTypeInputException {
         for (OperatorType operatorType : OperatorType.values()) {
-            if (operatorType.getSymbol().equals(symbol))
-            {
+            if (operatorType.getSymbol().equals(symbol)) {
                 return operatorType;
             }
         }
 
-        throw new BadInputException("사칙 연산자");
+        throw new InvalidTypeInputException(symbol, "사칙 연산자(+, -, *, /)", null);
     }
 }

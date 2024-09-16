@@ -4,8 +4,10 @@ import Main.Enum.OperatorType;
 
 /**
  * 계산기 로그용 클래스
+ *
+ * @author 김현정
  */
-public class CalculatorItem {
+public class CalculatorHistoryItem {
     private double firstNumber;
 
     public void setFirstNumber(double firstNumber) {
@@ -32,6 +34,13 @@ public class CalculatorItem {
 
     public void setOperator(OperatorType operator) {
         this.operator = operator;
+    }
+
+    public CalculatorHistoryItem(double firstNumber, double secondNumber, OperatorType operator, double result) {
+        this.firstNumber = firstNumber;
+        this.secondNumber = secondNumber;
+        this.operator = operator;
+        this.result = result;
     }
 
     /**

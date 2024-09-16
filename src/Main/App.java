@@ -2,14 +2,12 @@ package Main;
 
 import Main.Calculator.ArithmeticCalculator;
 import Main.Calculator.CalcParser;
-import Main.Calculator.CalculatorItem;
+import Main.Calculator.CalculatorHistoryItem;
 import Main.Enum.Menu;
 import Main.Enum.OperatorType;
-import Main.Exception.BadInputException;
+import Main.Exception.InvalidTypeInputException;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class App {
@@ -28,7 +26,6 @@ public class App {
      */
     public static void createCalculator() {
         calculator = new ArithmeticCalculator<>();
-        calculator.setCalcHistoryItems(new ArrayList<>());
     }
 
     /**
@@ -98,28 +95,15 @@ public class App {
         Arrays.stream(Menu.values()).forEach(menu ->
                 System.out.println(menu.getIndex() + ". " + menu.getDescription()));
 
-        System.out.print("메뉴를 선택하세요. >> ");
         while (true) {
             try {
+                System.out.print("메뉴를 선택하세요. >> ");
                 int inputNum = (int) CalcParser.ParserNumber(sc.nextLine());
                 return Menu.getMenu(inputNum);
-            } catch (BadInputException e) {
-                System.out.print(e.getMessage());
+            } catch (InvalidTypeInputException e) {
+                System.out.println(e.getErrorMsg());
             }
         }
-    }
-
-    /**
-     * 숫자와 연산자를 입력받은 뒤 사칙연산을 수행한다.
-     *
-     * @author 김현정
-     */
-    public static void basicCalculator() {
-        double firstNum = inputNumber("첫번째 숫자를 입력해주세요 >> ");
-        OperatorType operator = inputOperator("사칙연산 기호를 입력해주세요 >> ");
-        double secondNum = inputNumber("두번째 숫자를 입력해주세요 >> ");
-        double result = calculator.calculate(firstNum, secondNum, operator);
-        System.out.println("결과 >> " + result);
     }
 
     /**
@@ -130,12 +114,12 @@ public class App {
      * @author 김현정
      */
     public static double inputNumber(String printInputMsg) {
-        System.out.print(printInputMsg);
         while (true) {
             try {
+                System.out.print(printInputMsg);
                 return CalcParser.ParserNumber(sc.nextLine());
-            } catch (BadInputException e) {
-                System.out.print(e.getMessage());
+            } catch (InvalidTypeInputException e) {
+                System.out.println(e.getErrorMsg());
             }
         }
     }
@@ -148,14 +132,28 @@ public class App {
      * @author 김현정
      */
     public static OperatorType inputOperator(String printInputMsg) {
-        System.out.print(printInputMsg);
         while (true) {
             try {
+                System.out.print(printInputMsg);
                 return OperatorType.getOperatorType(sc.nextLine());
-            } catch (BadInputException e) {
-                System.out.print(e.getMessage());
+            } catch (InvalidTypeInputException e) {
+                System.out.println(e.getErrorMsg());
             }
         }
+    }
+
+    /**
+     * 숫자와 연산자를 입력받은 뒤 사칙연산을 수행한다.
+     *
+     * @author 김현정
+     */
+    public static void basicCalculator() {
+        double firstNum = inputNumber("첫번째 숫자를 입력해주세요 >> ");
+        OperatorType operatorType = inputOperator("사칙연산 기호를 입력해주세요 >> ");
+        double secondNum = inputNumber("두번째 숫자를 입력해주세요 >> ");
+        CalculatorHistoryItem calculatorHistoryItem = calculator.calculate(firstNum, secondNum, operatorType);
+        calculator.addCalculatorHistoryItem(calculatorHistoryItem);
+        System.out.println("결과 >> " + calculatorHistoryItem.getResult());
     }
 
     /**
@@ -165,22 +163,12 @@ public class App {
      * @author 김현정
      */
     public static void printCalcHistory(Menu menu) {
-        List<CalculatorItem> historyItems;
         if (menu == Menu.HISTORY) {
-            historyItems = calculator.getAllCalcHistoryItems();
+            calculator.printAllHistories();
         } else {
             double num = inputNumber("숫자를 입력해주세요 >> ");
-            historyItems = calculator.getAllCalcHistoryItems().stream()
-                    .filter(item -> item.getResult() > num).toList();
+            calculator.printHistoriesBiggerThanTarget(num);
         }
-
-        System.out.println("=== 연산 기록 ===");
-        if (historyItems.isEmpty()) {
-            System.out.println("History is empty...");
-        } else {
-            historyItems.forEach(CalculatorItem::printResult);
-        }
-        System.out.println("================");
     }
 
     /**
@@ -189,11 +177,6 @@ public class App {
      * @author 김현정
      */
     public static void removeFirstCalcHistory() {
-        if (calculator.getAllCalcHistoryItems().isEmpty()) {
-            System.out.println("History is empty.");
-        } else {
-            calculator.removeFirstResult();
-            System.out.println("첫번째 기록을 삭제하였습니다.");
-        }
+        calculator.removeFirstCalcHistory();
     }
 }
